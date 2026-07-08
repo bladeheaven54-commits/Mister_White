@@ -9,11 +9,11 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
-      theme: ThemeData (fontFamily:'BebasNeue'),
+    return MaterialApp(
+      theme: ThemeData(fontFamily: 'BebasNeue'),
       home: const Scaffold(
         body: Stack(
-          alignment: Alignment.center ,
+          alignment: Alignment.center,
           fit: StackFit.expand,
           children: [
             Image(
@@ -24,10 +24,13 @@ class MainApp extends StatelessWidget {
               top: 200,
               child: Text(
                 'Hola Mundo!',
-                 style: TextStyle(fontSize: 48, color: Colors.white),
+                style: TextStyle(
+                  fontSize: 48,
+                  color: Colors.white,
+                  letterSpacing: 8,
+                ),
               ),
             ),
-            
           ],
         ),
       ),
