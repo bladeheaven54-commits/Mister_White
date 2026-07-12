@@ -1,40 +1,36 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MainApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const MyApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(fontFamily: 'BebasNeue'),
-      home: const Scaffold(
-        body: Stack(
-          alignment: Alignment.center,
-          fit: StackFit.expand,
-          children: [
-            Image(
-              image: AssetImage('assets/images/fondo1.jpg'),
-              fit: BoxFit.cover,
+      debugShowCheckedModeBanner: false,
+      title: 'LBB',
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: const Color.fromARGB(0, 238, 39, 39),
+        primaryColor: Colors.cyanAccent,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blueAccent.withValues(alpha: 0.1),
+            foregroundColor: Colors.cyanAccent,
+            side: const BorderSide(color: Colors.cyanAccent, width: 2),
+            shadowColor: Colors.cyanAccent.withValues(alpha: 0.5),
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(4),
             ),
-            Positioned(
-              top: 200,
-              child: Text(
-                'Hola Mundo!',
-                style: TextStyle(
-                  fontSize: 48,
-                  color: Colors.white,
-                  letterSpacing: 8,
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
+      home: const Scaffold(),
     );
   }
-}//una pequeña prueba
-//.
+}
