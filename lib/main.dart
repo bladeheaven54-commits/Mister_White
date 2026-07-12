@@ -34,3 +34,15 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+class GlitchText extends StatelessWidget {
+  final String text;
+  final double fontSize;
+
+  const GlitchText({super.key, required this.text, this.fontSize = 40});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack();
+  }
+}
