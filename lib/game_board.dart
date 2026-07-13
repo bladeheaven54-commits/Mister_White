@@ -55,8 +55,8 @@ class _GameBoardstate extends State<GameBoard> {
       backgroundColor: backgroundColor,
       body: GridView.builder(
         itemCount: 8 * 8,
-        //Las physics conjelan la tabla
-        physics: const NeverScrollableScrollPhysics(),
+        physics:
+            const NeverScrollableScrollPhysics(), //Las physics conjelan la tabla
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 8,
         ),
