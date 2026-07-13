@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hola_word/Viuw/cuadrados.dart';
+import 'package:hola_word/main.dart';
 
 class GameBoard extends StatefulWidget {
   const GameBoard({super.key});
@@ -9,6 +10,12 @@ class GameBoard extends StatefulWidget {
 }
 
 class _GameBoardstate extends State<GameBoard> {
+  ChessPiece myPawn = ChessPiece(
+    type: ChessPieceType.pawn,
+    isWhite: true,
+    imagePath: 'lib/pieces/w_p.png',
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +32,7 @@ class _GameBoardstate extends State<GameBoard> {
 
           bool isWhite = (x + y) % 2 == 0;
 
-          return Cuadrados(isWhite: isWhite);
+          return Cuadrados(isWhite: isWhite, piece: myPawn);
         },
       ),
     );
