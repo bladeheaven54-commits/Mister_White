@@ -7,13 +7,22 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.teal,
-      body: Column(
-        children: [
-          Container(
-            height: 400,
-            decoration: BoxDecoration(color: Colors.green),
-          ),
-        ],
+      body: SafeArea(
+        bottom: false,
+        child: Column(
+          children: [
+            Container(
+              height: 350,
+              decoration: BoxDecoration(color: Colors.white),
+            ),
+            Expanded(
+              child: Container(
+                height: 200,
+                decoration: const BoxDecoration(color: Colors.red),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
