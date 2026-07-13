@@ -9,7 +9,7 @@ class Cuadrados extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: isWhite ? Colors.grey[500] : Colors.grey[700],
+      color: isWhite ? foregroundColor : backgroundColor,
       //peon
       child: piece != null
           ? Image.asset(
@@ -20,3 +20,7 @@ class Cuadrados extends StatelessWidget {
     );
   }
 }
+
+//el fondo
+var backgroundColor = Colors.grey[700];
+var foregroundColor = Colors.grey[300];

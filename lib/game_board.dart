@@ -10,6 +10,33 @@ class GameBoard extends StatefulWidget {
 }
 
 class _GameBoardstate extends State<GameBoard> {
+  late List<List<ChessPiece?>> board;
+  //iniciar el Proyecto
+  @override
+  void initState() {
+    super.initState();
+    _initializeBoard();
+    List<List<ChessPiece?>> newBoard = List.generate(
+      8,
+      (index) => List.generate(8, (index) => null),
+    );
+
+    //colocar los peones
+
+    //colocar las torres
+
+    //colocar los caballos
+
+    //colocar los alfiles
+
+    //colocar la reina
+
+    //colocar el rey
+  }
+
+  //inicio de aplicacion
+  void _initializeBoard() {}
+
   ChessPiece myPawn = ChessPiece(
     type: ChessPieceType.pawn,
     isWhite:
@@ -20,6 +47,7 @@ class _GameBoardstate extends State<GameBoard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundColor,
       body: GridView.builder(
         itemCount: 8 * 8,
         //Las physics conjelan la tabla
