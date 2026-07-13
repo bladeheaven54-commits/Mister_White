@@ -22,7 +22,18 @@ class _GameBoardstate extends State<GameBoard> {
     );
 
     //colocar los peones
-
+    for (int i = 0; i < 8; i++) {
+      newBoard[1][i] = ChessPiece(
+        type: ChessPieceType.pawn,
+        isWhite: false,
+        imagePath: 'assets/pieces/w_p.png',
+      );
+      newBoard[6][i] = ChessPiece(
+        type: ChessPieceType.pawn,
+        isWhite: true,
+        imagePath: 'assets/pieces/w_p.png',
+      );
+    }
     //colocar las torres
 
     //colocar los caballos
@@ -32,17 +43,11 @@ class _GameBoardstate extends State<GameBoard> {
     //colocar la reina
 
     //colocar el rey
+    board = newBoard;
   }
 
   //inicio de aplicacion
   void _initializeBoard() {}
-
-  ChessPiece myPawn = ChessPiece(
-    type: ChessPieceType.pawn,
-    isWhite:
-        true, //esto define si los peones van a hacer blancos o negros mediante en true o false
-    imagePath: 'assets/pieces/w_p.png',
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -56,12 +61,15 @@ class _GameBoardstate extends State<GameBoard> {
           crossAxisCount: 8,
         ),
         itemBuilder: (context, index) {
+          int row = index ~/ 8;
+          int col = index % 8;
+          //
           int x = index ~/ 8;
           int y = index % 8;
 
           bool isWhite = (x + y) % 2 == 0;
 
-          return Cuadrados(isWhite: isWhite, piece: myPawn);
+          return Cuadrados(isWhite: isWhite, piece: board[row][col]);
         },
       ),
     );
