@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hola_word/Viuw/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,19 +31,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const Scaffold(),
+      home: HomeScreen(),
     );
-  }
-}
-
-class GlitchText extends StatelessWidget {
-  final String text;
-  final double fontSize;
-
-  const GlitchText({super.key, required this.text, this.fontSize = 40});
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack();
   }
 }
