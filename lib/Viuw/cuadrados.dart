@@ -11,7 +11,12 @@ class Cuadrados extends StatelessWidget {
     return Container(
       color: isWhite ? Colors.grey[200] : Colors.grey[500],
       //peon
-      child: piece != null ? Image.asset(piece!.imagePath) : null,
+      child: piece != null
+          ? Image.asset(
+              piece!.imagePath,
+              color: piece!.isWhite ? Colors.white : Colors.black,
+            )
+          : null,
     );
   }
 }

@@ -13,7 +13,7 @@ class _GameBoardstate extends State<GameBoard> {
   ChessPiece myPawn = ChessPiece(
     type: ChessPieceType.pawn,
     isWhite: true,
-    imagePath: 'lib/pieces/w_p.png',
+    imagePath: 'assets/pieces/w_p.png',
   );
 
   @override
