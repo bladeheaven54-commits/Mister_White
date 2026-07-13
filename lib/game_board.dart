@@ -12,7 +12,8 @@ class GameBoard extends StatefulWidget {
 class _GameBoardstate extends State<GameBoard> {
   ChessPiece myPawn = ChessPiece(
     type: ChessPieceType.pawn,
-    isWhite: true,
+    isWhite:
+        true, //esto define si los peones van a hacer blancos o negros mediante en true o false
     imagePath: 'assets/pieces/w_p.png',
   );
 
