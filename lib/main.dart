@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+//AQUI ESTA LO QUE DEFINE LOS VALORES DE LAS TROPAS
 enum ChessPieceType { pawn, rook, knight, bishop, queen, king }
 
 class ChessPiece {

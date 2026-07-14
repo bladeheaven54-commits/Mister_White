@@ -23,4 +23,4 @@ class Cuadrados extends StatelessWidget {
 
 //el fondo
 var backgroundColor = Colors.grey[700];
-var foregroundColor = Colors.grey[300];
+var foregroundColor = Colors.grey[500];
