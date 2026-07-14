@@ -17,6 +17,7 @@ class Cuadrados extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color? squareColor;
+    //color de la seleccion
     if (isSelected) {
       squareColor = Colors.green;
     } else {

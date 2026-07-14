@@ -124,7 +124,7 @@ class _GameBoardstate extends State<GameBoard> {
       isWhite: false,
       imagePath: 'assets/pieces/b_q.png',
     );
-    newBoard[7][4] = ChessPiece(
+    newBoard[7][3] = ChessPiece(
       type: ChessPieceType.king,
       isWhite: true,
       imagePath: 'assets/pieces/w_q.png',
