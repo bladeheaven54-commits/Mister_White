@@ -4,19 +4,36 @@ import 'package:hola_word/main.dart';
 class Cuadrados extends StatelessWidget {
   final bool isWhite;
   final ChessPiece? piece;
-  const Cuadrados({super.key, required this.isWhite, required this.piece});
+  final bool isSelected;
+  final void Function()? onTab;
+  const Cuadrados({
+    super.key,
+    required this.isWhite,
+    required this.piece,
+    required this.isSelected,
+    required this.onTab,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: isWhite ? foregroundColor : backgroundColor,
-      //peon
-      child: piece != null
-          ? Image.asset(
-              piece!.imagePath,
-              color: piece!.isWhite ? Colors.white : Colors.black,
-            )
-          : null,
+    Color? squareColor;
+    if (isSelected) {
+      squareColor = Colors.green;
+    } else {
+      squareColor = isWhite ? foregroundColor : backgroundColor;
+    }
+    return GestureDetector(
+      onTap: onTab,
+      child: Container(
+        color: squareColor,
+        //peon
+        child: piece != null
+            ? Image.asset(
+                piece!.imagePath,
+                color: piece!.isWhite ? Colors.white : Colors.black,
+              )
+            : null,
+      ),
     );
   }
 }

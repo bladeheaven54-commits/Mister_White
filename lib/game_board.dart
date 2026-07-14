@@ -11,6 +11,15 @@ class GameBoard extends StatefulWidget {
 
 class _GameBoardstate extends State<GameBoard> {
   late List<List<ChessPiece?>> board;
+  //pra selleccionar
+  ChessPiece? selectedPiece;
+  //registro de fila y columna
+  //-1 por defecto no ha seleccionado nada
+  int selectedRow = -1;
+
+  //-1 por defecto no ha seleccionado nada
+  int selectedCol = -1;
+
   //iniciar el Proyecto
   @override
   void initState() {
@@ -115,7 +124,7 @@ class _GameBoardstate extends State<GameBoard> {
       isWhite: false,
       imagePath: 'assets/pieces/b_q.png',
     );
-    newBoard[7][3] = ChessPiece(
+    newBoard[7][4] = ChessPiece(
       type: ChessPieceType.king,
       isWhite: true,
       imagePath: 'assets/pieces/w_q.png',
@@ -126,6 +135,19 @@ class _GameBoardstate extends State<GameBoard> {
 
   //inicio de aplicacion
   void _initializeBoard() {}
+
+  //uso de selector por usuario
+
+  void pieceSelected(int row, int col) {
+    setState(() {
+      //selecciona una pieza si hay una pieza en esta posicion
+      if (board[row][col] != null) {
+        selectedPiece = board[row][col];
+        selectedRow = row;
+        selectedCol = col;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +169,13 @@ class _GameBoardstate extends State<GameBoard> {
 
           bool isWhite = (x + y) % 2 == 0;
 
-          return Cuadrados(isWhite: isWhite, piece: board[row][col]);
+          bool isSelected = selectedRow == row && selectedCol == col;
+          return Cuadrados(
+            isWhite: isWhite,
+            piece: board[row][col],
+            isSelected: isSelected,
+            onTab: () => pieceSelected(row, col),
+          );
         },
       ),
     );
