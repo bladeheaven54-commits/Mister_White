@@ -1,3 +1,5 @@
+import 'dart:nativewrappers/_internal/vm/lib/internal_patch.dart';
+
 import 'package:flutter/material.dart';
 import 'package:hola_word/Viuw/cuadrados.dart';
 import 'package:hola_word/main.dart';
@@ -11,7 +13,7 @@ class GameBoard extends StatefulWidget {
 
 class _GameBoardstate extends State<GameBoard> {
   late List<List<ChessPiece?>> board;
-  //pra selleccionar
+  //para selleccionar
   ChessPiece? selectedPiece;
   //registro de fila y columna
   //-1 por defecto no ha seleccionado nada
@@ -19,6 +21,10 @@ class _GameBoardstate extends State<GameBoard> {
 
   //-1 por defecto no ha seleccionado nada
   int selectedCol = -1;
+
+  // movimientos validos de las fichas
+  //y se va a representar como una lista con 2 Elementos, filas y columnas
+  List<List<int>> validMoves = [];
 
   //iniciar el Proyecto
   @override
@@ -146,7 +152,45 @@ class _GameBoardstate extends State<GameBoard> {
         selectedRow = row;
         selectedCol = col;
       }
+
+      //despues de seleccionar una pieza calcula sus movimientos validos
+      validMoves = calculateRawValidMoves(
+        selectedRow,
+        selectedCol,
+        selectedPiece,
+      );
     });
+  }
+  //CALCULA MOVIMIENTOS VALIDOS BRUTOS
+
+  List<List<int>> calculateRawValidMoves(int row, int col, ChessPiece? piece) {
+    List<List<int>> candidateMoves = [];
+
+    //diferencias segun el color
+    int direction = piece!.isWhite ? -1 : 1;
+
+    switch (piece.type) {
+      case ChessPieceType.pawn:
+        //los peones pueden caminar 1 paso
+
+        //los peones puden caminar 2 pasos al inicio
+
+        //los peones pueden matar en diagonal 1 paso
+
+        break;
+      case ChessPieceType.rook:
+        break;
+      case ChessPieceType.knight:
+        break;
+      case ChessPieceType.bishop:
+        break;
+      case ChessPieceType.queen:
+        break;
+      case ChessPieceType.king:
+        break;
+
+      default:
+    }
   }
 
   @override
