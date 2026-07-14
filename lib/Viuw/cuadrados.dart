@@ -20,9 +20,11 @@ class Cuadrados extends StatelessWidget {
     //color de la seleccion
     if (isSelected) {
       squareColor = Colors.green;
+      //si no esta sellecionado no aparecera ningun color. Solo el fondo blanco y negro
     } else {
       squareColor = isWhite ? foregroundColor : backgroundColor;
     }
+
     return GestureDetector(
       onTap: onTab,
       child: Container(
