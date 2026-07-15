@@ -5,13 +5,16 @@ class Cuadrados extends StatelessWidget {
   final bool isWhite;
   final ChessPiece? piece;
   final bool isSelected;
+  final bool _isValidMove;
   final void Function()? onTab;
+
   const Cuadrados({
     super.key,
     required this.isWhite,
     required this.piece,
     required this.isSelected,
     required this.onTab,
+    required this._isValidMove,
   });
 
   @override
@@ -20,6 +23,8 @@ class Cuadrados extends StatelessWidget {
     //color de la seleccion
     if (isSelected) {
       squareColor = Colors.green;
+    } else if (_isValidMove) {
+      squareColor = Colors.green[300];
       //si no esta sellecionado no aparecera ningun color. Solo el fondo blanco y negro
     } else {
       squareColor = isWhite ? foregroundColor : backgroundColor;

@@ -1,5 +1,3 @@
-import 'dart:nativewrappers/_internal/vm/lib/internal_patch.dart';
-
 import 'package:flutter/material.dart';
 import 'package:hola_word/Viuw/cuadrados.dart';
 import 'package:hola_word/main.dart';
@@ -172,10 +170,29 @@ class _GameBoardstate extends State<GameBoard> {
     switch (piece.type) {
       case ChessPieceType.pawn:
         //los peones pueden caminar 1 paso
-
+        if (isInBoard(row + direction, col) &&
+            board[row + direction][col] == null) {
+          candidateMoves.add([row + direction, col]);
+        }
         //los peones puden caminar 2 pasos al inicio
-
+        if ((row == 1 && !piece.isWhite) || (row == 6 && piece.isWhite)) {
+          if (isInBoard(row + 2, col) &&
+              board[row + 2 * direction][col] == null &&
+              board[row + direction][col] == null) {
+            candidateMoves.add([row + 2 * direction, col]);
+          }
+        }
         //los peones pueden matar en diagonal 1 paso
+        if (isInBoard(row + direction, col - 1) &&
+            board[row + direction][col - 1] != null &&
+            board[row + direction][col - 1]!.isWhite) {
+          candidateMoves.add([row + direction, col - 1]);
+        }
+        if (isInBoard(row + direction, col + 1) &&
+            board[row + direction][col + 1] != null &&
+            board[row + direction][col + 1]!.isWhite) {
+          candidateMoves.add([row + direction, col + 1]);
+        }
 
         break;
       case ChessPieceType.rook:
@@ -188,9 +205,8 @@ class _GameBoardstate extends State<GameBoard> {
         break;
       case ChessPieceType.king:
         break;
-
-      default:
     }
+    return candidateMoves;
   }
 
   @override
@@ -214,14 +230,32 @@ class _GameBoardstate extends State<GameBoard> {
           bool isWhite = (x + y) % 2 == 0;
 
           bool isSelected = selectedRow == row && selectedCol == col;
+
+          //verifica si los mocimientos son validos
+          bool isValidMove = false;
+          for (var posicion in validMoves) {
+            //comparacion entre colummnas
+
+            if (posicion[0] == row && posicion[1] == col) {
+              isValidMove = true;
+            }
+          }
+          // ESTO ES MUY IMPORTANTE A LA HORA DE CORRER LA APP
           return Cuadrados(
             isWhite: isWhite,
             piece: board[row][col],
             isSelected: isSelected,
+            isValidMove: isValidMove,
             onTab: () => pieceSelected(row, col),
           );
         },
       ),
     );
   }
+}
+
+//movimiento
+
+bool isInBoard(int row, int col) {
+  return row >= 0 && row < 8 && col > 0 && col < 8;
 }
