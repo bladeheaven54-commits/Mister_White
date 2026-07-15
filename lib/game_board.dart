@@ -253,6 +253,32 @@ class _GameBoardstate extends State<GameBoard> {
 
         break;
       case ChessPieceType.bishop:
+        //alfil dirrecion en diagonal
+        var directions = [
+          [-1, -1], // up left
+          [-1, 1], // up right
+          [1, -1], // down left
+          [1, 1], // down right
+        ];
+
+        for (var direction in directions) {
+          var i = 0;
+          while (true) {
+            var newRow = row + i * direction[0];
+            var newCol = col + i * direction[1];
+            if (!isInBoard(newRow, newCol)) {
+              break;
+            }
+            if (board[newRow][newCol] != null) {
+              if (board[newRow][newCol]!.isWhite != piece.isWhite) {
+                candidateMoves.add([newRow, newCol]); //captura
+              }
+              break; //bloqueado
+            }
+            candidateMoves.add([newRow, newCol]);
+            i++;
+          }
+        }
         break;
       case ChessPieceType.queen:
         break;
@@ -310,5 +336,5 @@ class _GameBoardstate extends State<GameBoard> {
 //movimiento
 
 bool isInBoard(int row, int col) {
-  return row >= 0 && row < 8 && col > 0 && col < 8;
+  return row >= 0 && row < 8 && col >= 0 && col < 8;
 }
