@@ -34,6 +34,8 @@ class _GameBoardstate extends State<GameBoard> {
       (index) => List.generate(8, (index) => null),
     );
 
+    //PIEZA EN MEDIO DEL TABLERO
+
     //colocar los peones
     for (int i = 0; i < 8; i++) {
       newBoard[1][i] = ChessPiece(
@@ -281,8 +283,63 @@ class _GameBoardstate extends State<GameBoard> {
         }
         break;
       case ChessPieceType.queen:
+        //la reyna se mueve entodas direciones, izquierda, derecha, arriba, abajo, y diagonal
+        var directions = [
+          [-1, 0], //up
+          [1, 0], //down
+          [0, -1], // left
+          [0, 1], // right
+          [-1 - 1], // up left
+          [-1, 1], // up right
+          [1, -1], //down left
+          [1, 1], // down right
+        ];
+        for (var direction in directions) {
+          var i = 1;
+          while (true) {
+            var newRow = row + i * direction[0];
+            var newCol = col + i * direction[1];
+            if (!isInBoard(newRow, newCol)) {
+              break;
+            }
+            if (board[newRow][newCol] != null) {
+              if (board[newRow][newCol]!.isWhite != piece.isWhite) {
+                candidateMoves.add([newRow, newCol]); // capture
+              }
+              break; // bloqueado
+            }
+            candidateMoves.add([newRow, newCol]);
+            i++;
+          }
+        }
         break;
       case ChessPieceType.king:
+        // el rey se mueve para todos lados pero a un paso
+        var directions = [
+          [-1, 0], //up
+          [1, 0], //down
+          [0, -1], // left
+          [0, 1], // right
+          [-1 - 1], // up left
+          [-1, 1], // up right
+          [1, -1], //down left
+          [1, 1], // down right
+        ];
+        for (var direction in directions) {
+          var newRow = row + direction[0];
+          var newCol = col + direction[1];
+          if (!isInBoard(newRow, newCol)) {
+            continue;
+          }
+          if (board[newRow][newCol] != null) {
+            if (board[newRow][newCol]!.isWhite != piece.isWhite) {
+              candidateMoves.add([newRow, newCol]); // capturado
+            }
+            continue; //bloqueado
+          }
+          candidateMoves.add([newRow, newCol]);
+        }
+
         break;
     }
     return candidateMoves;
