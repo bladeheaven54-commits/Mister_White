@@ -35,6 +35,11 @@ class _GameBoardstate extends State<GameBoard> {
     );
 
     //PIEZA EN MEDIO DEL TABLERO
+    newBoard[3][3] = ChessPiece(
+      type: ChessPieceType.rook,
+      isWhite: false,
+      imagePath: 'assets/pieces/b_r.png',
+    );
 
     //colocar los peones
     for (int i = 0; i < 8; i++) {
@@ -216,7 +221,7 @@ class _GameBoardstate extends State<GameBoard> {
             }
             if (board[newRow][newCol] != null) {
               if (board[newRow][newCol]!.isWhite != piece.isWhite) {
-                candidateMoves.add([newRow, newRow]); //muerte
+                candidateMoves.add([newRow, newCol]); //muerte
               }
               break; //bucle bloqueado
             }
