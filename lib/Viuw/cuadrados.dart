@@ -34,6 +34,7 @@ class Cuadrados extends StatelessWidget {
       onTap: onTab,
       child: Container(
         color: squareColor,
+        margin: EdgeInsets.all(_isValidMove ? 8 : 0),
         //peon
         child: piece != null
             ? Image.asset(

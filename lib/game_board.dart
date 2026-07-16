@@ -144,12 +144,25 @@ class _GameBoardstate extends State<GameBoard> {
 
   void pieceSelected(int row, int col) {
     setState(() {
-      //selecciona una pieza si hay una pieza en esta posicion
-      if (board[row][col] != null) {
+      //no se ha seleccionado ninguna pieza y esta es la primera seleccion
+      if (selectedPiece == null && board[row][col] != null) {
         selectedPiece = board[row][col];
         selectedRow = row;
         selectedCol = col;
       }
+      //hay una pieza seleccionada, pero el usuario puede seleccionar otra pieza
+      else if (board[row][col] != null &&
+          board[row][col]!.isWhite == selectedPiece!.isWhite) {
+        selectedPiece = board[row][col];
+        selectedRow = row;
+        selectedCol = col;
+      }
+      //selecciona una pieza si hay una pieza en esta posicion
+      //if (board[row][col] != null) {
+      //  selectedPiece = board[row][col];
+      //  selectedRow = row;
+      //  selectedCol = col;
+      //  }
       //una pieza esta seleccionada y el usuario la toca en otra casilla que es un movimiento valido
       else if (selectedPiece != null &&
           validMoves.any((element) => element[0] == row && element[1] == col)) {
@@ -194,12 +207,12 @@ class _GameBoardstate extends State<GameBoard> {
         //los peones pueden matar en diagonal 1 paso
         if (isInBoard(row + direction, col - 1) &&
             board[row + direction][col - 1] != null &&
-            board[row + direction][col - 1]!.isWhite) {
+            board[row + direction][col - 1]!.isWhite != piece.isWhite) {
           candidateMoves.add([row + direction, col - 1]);
         }
         if (isInBoard(row + direction, col + 1) &&
             board[row + direction][col + 1] != null &&
-            board[row + direction][col + 1]!.isWhite) {
+            board[row + direction][col + 1]!.isWhite != piece.isWhite) {
           candidateMoves.add([row + direction, col + 1]);
         }
 
@@ -327,7 +340,7 @@ class _GameBoardstate extends State<GameBoard> {
           [1, 0], //down
           [0, -1], // left
           [0, 1], // right
-          [-1 - 1], // up left
+          [-1, -1], // up left
           [-1, 1], // up right
           [1, -1], //down left
           [1, 1], // down right
