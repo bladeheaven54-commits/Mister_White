@@ -34,13 +34,6 @@ class _GameBoardstate extends State<GameBoard> {
       (index) => List.generate(8, (index) => null),
     );
 
-    //PIEZA EN MEDIO DEL TABLERO
-    newBoard[3][3] = ChessPiece(
-      type: ChessPieceType.queen,
-      isWhite: true,
-      imagePath: 'assets/pieces/w_k.png',
-    );
-
     //colocar los peones
     for (int i = 0; i < 8; i++) {
       newBoard[1][i] = ChessPiece(
@@ -147,7 +140,7 @@ class _GameBoardstate extends State<GameBoard> {
   //inicio de aplicacion
   void _initializeBoard() {}
 
-  //uso de selector por usuario
+  //uso de selector de piezas
 
   void pieceSelected(int row, int col) {
     setState(() {
@@ -156,6 +149,11 @@ class _GameBoardstate extends State<GameBoard> {
         selectedPiece = board[row][col];
         selectedRow = row;
         selectedCol = col;
+      }
+      //una pieza esta seleccionada y el usuario la toca en otra casilla que es un movimiento valido
+      else if (selectedPiece != null &&
+          validMoves.any((element) => element[0] == row && element[1] == col)) {
+        movePiece(row, col);
       }
 
       //despues de seleccionar una pieza calcula sus movimientos validos
@@ -170,6 +168,10 @@ class _GameBoardstate extends State<GameBoard> {
 
   List<List<int>> calculateRawValidMoves(int row, int col, ChessPiece? piece) {
     List<List<int>> candidateMoves = [];
+
+    if (piece == null) {
+      return [];
+    }
 
     //diferencias segun el color
     int direction = piece!.isWhite ? -1 : 1;
@@ -348,6 +350,20 @@ class _GameBoardstate extends State<GameBoard> {
         break;
     }
     return candidateMoves;
+  }
+
+  //MOMENTO DE LA CAPASIDAD DE MOVER PIEZAS
+  void movePiece(int newRow, int newCol) {
+    //movemos la pieza y se borra en el lugar anterior
+    board[newRow][newCol] = selectedPiece;
+    board[selectedRow][selectedCol] = null;
+    //borrar la seleccion
+    setState(() {
+      selectedPiece = null;
+      selectedRow = -1;
+      selectedCol = -1;
+      validMoves = [];
+    });
   }
 
   @override
