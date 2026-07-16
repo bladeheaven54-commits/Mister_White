@@ -36,9 +36,9 @@ class _GameBoardstate extends State<GameBoard> {
 
     //PIEZA EN MEDIO DEL TABLERO
     newBoard[3][3] = ChessPiece(
-      type: ChessPieceType.rook,
-      isWhite: false,
-      imagePath: 'assets/pieces/b_r.png',
+      type: ChessPieceType.queen,
+      isWhite: true,
+      imagePath: 'assets/pieces/w_k.png',
     );
 
     //colocar los peones
@@ -269,7 +269,7 @@ class _GameBoardstate extends State<GameBoard> {
         ];
 
         for (var direction in directions) {
-          var i = 0;
+          var i = 1;
           while (true) {
             var newRow = row + i * direction[0];
             var newCol = col + i * direction[1];
@@ -294,7 +294,7 @@ class _GameBoardstate extends State<GameBoard> {
           [1, 0], //down
           [0, -1], // left
           [0, 1], // right
-          [-1 - 1], // up left
+          [-1, -1], // up left
           [-1, 1], // up right
           [1, -1], //down left
           [1, 1], // down right
