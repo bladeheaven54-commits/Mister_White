@@ -24,6 +24,10 @@ class _GameBoardstate extends State<GameBoard> {
   //y se va a representar como una lista con 2 Elementos, filas y columnas
   List<List<int>> validMoves = [];
 
+  // una lista de piezas blancas  negras que han sido capturas
+  List<ChessPiece> whitePiecesTakes = [];
+  // una lista de piezas  negras que han sido capturas
+  List<ChessPiece> blackPiecesTakes = [];
   //iniciar el Proyecto
   @override
   void initState() {
