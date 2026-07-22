@@ -400,46 +400,56 @@ class _GameBoardstate extends State<GameBoard> {
       body: Column(
         children: [
           //WHITE PIECES TAKEN
-
+        Expanded(child: GridView.builder(
+          itemCount: whitePiecesTakes.length,
+          gridDelegate:
+         const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 8)
+         itemBuilder: (context, index)=>DeadPiece(),
+         ),
+         ),
           // CHEES BOARD
-          GridView.builder(
-            itemCount: 8 * 8,
-            physics:
-                const NeverScrollableScrollPhysics(), //Las physics conjelan la tabla
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 8,
-            ),
-            itemBuilder: (context, index) {
-              int row = index ~/ 8;
-              int col = index % 8;
-              //
-              int x = index ~/ 8;
-              int y = index % 8;
+          Expanded(
+            child: GridView.builder(
+              itemCount: 8 * 8,
+              physics:
+                  const NeverScrollableScrollPhysics(), //Las physics conjelan la tabla
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 8,
+              ),
+              itemBuilder: (context, index) {
+                int row = index ~/ 8;
+                int col = index % 8;
+                //
+                int x = index ~/ 8;
+                int y = index % 8;
 
-              bool isWhite = (x + y) % 2 == 0;
+                bool isWhite = (x + y) % 2 == 0;
 
-              bool isSelected = selectedRow == row && selectedCol == col;
+                bool isSelected = selectedRow == row && selectedCol == col;
 
-              //verifica si los mocimientos son validos
-              bool isValidMove = false;
-              for (var posicion in validMoves) {
-                //comparacion entre colummnas
+                //verifica si los mocimientos son validos
+                bool isValidMove = false;
+                for (var posicion in validMoves) {
+                  //comparacion entre colummnas
 
-                if (posicion[0] == row && posicion[1] == col) {
-                  isValidMove = true;
+                  if (posicion[0] == row && posicion[1] == col) {
+                    isValidMove = true;
+                  }
                 }
-              }
-              // ESTO ES MUY IMPORTANTE A LA HORA DE CORRER LA APP
-              return Cuadrados(
-                isWhite: isWhite,
-                piece: board[row][col],
-                isSelected: isSelected,
-                isValidMove: isValidMove,
-                onTab: () => pieceSelected(row, col),
-              );
-            },
+                // ESTO ES MUY IMPORTANTE A LA HORA DE CORRER LA APP
+                return Cuadrados(
+                  isWhite: isWhite,
+                  piece: board[row][col],
+                  isSelected: isSelected,
+                  isValidMove: isValidMove,
+                  onTab: () => pieceSelected(row, col),
+                );
+              },
+            ),
           ),
         ],
+
+        // BLACK PIECES TAKES
       ),
     );
   }
