@@ -24,10 +24,15 @@ class _GameBoardstate extends State<GameBoard> {
   //y se va a representar como una lista con 2 Elementos, filas y columnas
   List<List<int>> validMoves = [];
 
-  // una lista de piezas blancas  negras que han sido capturas
+  // una lista de piezas blancas que han sido capturas
   List<ChessPiece> whitePiecesTakes = [];
+
   // una lista de piezas  negras que han sido capturas
   List<ChessPiece> blackPiecesTakes = [];
+
+  // un boleano para indicar si es el turno blanco o turno negro
+  bool isWhiteTurn = true;
+
   //iniciar el Proyecto
   @override
   void initState() {
@@ -150,9 +155,11 @@ class _GameBoardstate extends State<GameBoard> {
     setState(() {
       //no se ha seleccionado ninguna pieza y esta es la primera seleccion
       if (selectedPiece == null && board[row][col] != null) {
-        selectedPiece = board[row][col];
-        selectedRow = row;
-        selectedCol = col;
+        if (board[row][col]!.isWhite == isWhiteTurn) {
+          selectedPiece = board[row][col];
+          selectedRow = row;
+          selectedCol = col;
+        }
       }
       //hay una pieza seleccionada, pero el usuario puede seleccionar otra pieza
       else if (board[row][col] != null &&
@@ -391,6 +398,9 @@ class _GameBoardstate extends State<GameBoard> {
       selectedCol = -1;
       validMoves = [];
     });
+
+    //change turns
+    isWhiteTurn = !isWhiteTurn;
   }
 
   @override
