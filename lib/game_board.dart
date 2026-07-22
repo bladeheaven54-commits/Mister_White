@@ -403,6 +403,7 @@ class _GameBoardstate extends State<GameBoard> {
           Expanded(
             child: GridView.builder(
               itemCount: whitePiecesTakes.length,
+              physics: const NeverScrollableScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 8,
               ),
@@ -415,6 +416,8 @@ class _GameBoardstate extends State<GameBoard> {
 
           // CHEES BOARD
           Expanded(
+            // flex: 3 significa la logitud vertical en telefono
+            flex: 3,
             child: GridView.builder(
               itemCount: 8 * 8,
               physics:
@@ -458,6 +461,7 @@ class _GameBoardstate extends State<GameBoard> {
           Expanded(
             child: GridView.builder(
               itemCount: blackPiecesTakes.length,
+              physics: const NeverScrollableScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 8,
               ),
@@ -493,6 +497,9 @@ class DeadPiece extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(imagePath);
+    return Image.asset(
+      imagePath,
+      color: isWhite ? Colors.grey[400] : Colors.grey[900],
+    );
   }
 }
