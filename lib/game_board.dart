@@ -369,10 +369,10 @@ class _GameBoardstate extends State<GameBoard> {
     return candidateMoves;
   }
 
-  //MOMENTO DE LA CAPASIDAD DE MOVER PIEZAS
+  //MOMENTO DE LA CAPACIDAD DE MOVER PIEZAS
   void movePiece(int newRow, int newCol) {
     // si el nuevo lugar tiene una pieza enemigo
-    if (board[newRow][newCol] = null) {
+    if (board[newRow][newCol] != null) {
       //agregar la captura piece  y se apropiela list
       var capturedPiece = board[newRow][newCol];
       if (capturedPiece!.isWhite) {
@@ -400,13 +400,18 @@ class _GameBoardstate extends State<GameBoard> {
       body: Column(
         children: [
           //WHITE PIECES TAKEN
-        Expanded(child: GridView.builder(
-          itemCount: whitePiecesTakes.length,
-          gridDelegate:
-         const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 8)
-         itemBuilder: (context, index)=>DeadPiece(),
-         ),
-         ),
+          Expanded(
+            child: GridView.builder(
+              itemCount: whitePiecesTakes.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 8,
+              ),
+              itemBuilder: (context, index) => DeadPiece(
+                imagePath: whitePiecesTakes[index].imagePath,
+                isWhite: true,
+              ),
+            ),
+          ),
           // CHEES BOARD
           Expanded(
             child: GridView.builder(
@@ -459,4 +464,16 @@ class _GameBoardstate extends State<GameBoard> {
 
 bool isInBoard(int row, int col) {
   return row >= 0 && row < 8 && col >= 0 && col < 8;
+}
+
+//clase DE MUERTE DE PIEZAS
+class DeadPiece extends StatelessWidget {
+  final String imagePath;
+  final bool isWhite;
+  const DeadPiece({super.key, required this.imagePath, required this.isWhite});
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(imagePath);
+  }
 }
