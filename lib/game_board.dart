@@ -468,6 +468,8 @@ class _GameBoardstate extends State<GameBoard> {
             ),
           ),
 
+          // ESTADO EL JUEGO
+          Text(checkStatus ? "JAQUE!" : ""),
           // CHEES BOARD
           Expanded(
             // flex: 3 significa la logitud vertical en telefono
