@@ -191,7 +191,7 @@ class _GameBoardstate extends State<GameBoard> {
     }
 
     //diferencias segun el color
-    int direction = piece!.isWhite ? -1 : 1;
+    int direction = piece.isWhite ? -1 : 1;
 
     switch (piece.type) {
       case ChessPieceType.pawn:
@@ -412,6 +412,7 @@ class _GameBoardstate extends State<GameBoard> {
               ),
             ),
           ),
+
           // CHEES BOARD
           Expanded(
             child: GridView.builder(
@@ -452,9 +453,21 @@ class _GameBoardstate extends State<GameBoard> {
               },
             ),
           ),
-        ],
 
-        // BLACK PIECES TAKES
+          // BLACK PIECES TAKES
+          Expanded(
+            child: GridView.builder(
+              itemCount: blackPiecesTakes.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 8,
+              ),
+              itemBuilder: (context, index) => DeadPiece(
+                imagePath: blackPiecesTakes[index].imagePath,
+                isWhite: false,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -470,7 +483,13 @@ bool isInBoard(int row, int col) {
 class DeadPiece extends StatelessWidget {
   final String imagePath;
   final bool isWhite;
-  const DeadPiece({super.key, required this.imagePath, required this.isWhite});
+
+  const DeadPiece({
+    // un comentario porque esta mondaaa no funciona
+    super.key,
+    required this.imagePath,
+    required this.isWhite,
+  });
 
   @override
   Widget build(BuildContext context) {
