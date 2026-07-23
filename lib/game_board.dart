@@ -451,7 +451,7 @@ class _GameBoardstate extends State<GameBoard> {
       validMoves = [];
     });
     // check if its check mate
-    if (isCheckMate(isWhiteTurn)) {
+    if (isCheckMate(!isWhiteTurn)) {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
