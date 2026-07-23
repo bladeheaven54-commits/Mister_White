@@ -534,7 +534,7 @@ class _GameBoardstate extends State<GameBoard> {
       }
     }
     // if king is in check = true, means its not a safe move. safe move = false
-    return kingInCheck;
+    return !kingInCheck;
   }
 
   @override
