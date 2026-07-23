@@ -186,10 +186,11 @@ class _GameBoardstate extends State<GameBoard> {
       }
 
       //despues de seleccionar una pieza calcula sus movimientos validos
-      validMoves = calculateRawValidMoves(
+      validMoves = calculateRealValidMoves(
         selectedRow,
         selectedCol,
         selectedPiece,
+        true,
       );
     });
   }
@@ -468,10 +469,11 @@ class _GameBoardstate extends State<GameBoard> {
         if (board[i][j] == null || board[i][j]!.isWhite == isWhiteKing) {
           continue;
         }
-        List<List<int>> pieceValidMoves = calculateRawValidMoves(
+        List<List<int>> pieceValidMoves = calculateRealValidMoves(
           i,
           j,
           board[i][j],
+          false,
         );
 
         //check is the king's position is in this  piece's valid moves
