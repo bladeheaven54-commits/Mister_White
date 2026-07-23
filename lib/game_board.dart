@@ -450,6 +450,22 @@ class _GameBoardstate extends State<GameBoard> {
       selectedCol = -1;
       validMoves = [];
     });
+    // check if its check mate
+    if (isCheckMate(isWhiteTurn)) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text("JAQUE MATE MAMAGUEVO"),
+          actions: [
+            //jugar de nuevo
+            TextButton(
+              onPressed: resetGame,
+              child: const Text("Jugar de nuevo"),
+            ),
+          ],
+        ),
+      );
+    }
 
     //change turns
     isWhiteTurn = !isWhiteTurn;
@@ -535,6 +551,53 @@ class _GameBoardstate extends State<GameBoard> {
     }
     // if king is in check = true, means its not a safe move. safe move = false
     return !kingInCheck;
+  }
+
+  //IS IT CHECK MATE
+
+  bool isCheckMate(bool isWhiteKing) {
+    // if the king is not in check, then its not checkmate
+    if (!isKingInCheck(isWhiteKing)) {
+      return false;
+    }
+    // if there is at least one legl move for any of the players pieces, then its not checkmate
+    for (int i = 0; i < 8; i++) {
+      for (int j = 0; j < 8; j++) {
+        //skip empty square nad pieces of the other color
+        if (board[i][j] == null || board[i][j]!.isWhite != isWhiteKing) {
+          continue;
+        }
+
+        List<List<int>> pieceValidMoves = calculateRealValidMoves(
+          i,
+          j,
+          board[i][j],
+          true,
+        );
+
+        //if this piece has any valid moves, then its not checkmate
+        if (pieceValidMoves.isNotEmpty) {
+          return false;
+        }
+      }
+    }
+    // if none of the above conditions are met, then there are no legal moves left to make
+
+    //its check mate!
+    return true;
+  }
+
+  //RESET TO NEW GAME
+  void resetGame() {
+    Navigator.pop(context);
+    _initializeBoard();
+    checkStatus = false;
+    whitePiecesTakes.clear();
+    blackPiecesTakes.clear();
+    setState(() {
+      whiteKingPosition = [7, 4];
+      blackKingPosition = [0, 4];
+    });
   }
 
   @override
