@@ -594,10 +594,10 @@ class _GameBoardstate extends State<GameBoard> {
     checkStatus = false;
     whitePiecesTakes.clear();
     blackPiecesTakes.clear();
-    setState(() {
-      whiteKingPosition = [7, 4];
-      blackKingPosition = [0, 4];
-    });
+    whiteKingPosition = [7, 4];
+    blackKingPosition = [0, 4];
+
+    setState(() {});
   }
 
   @override
