@@ -380,23 +380,29 @@ class _GameBoardstate extends State<GameBoard> {
     }
     return candidateMoves;
   }
+
   // CALCULA MOVIENTO VALIDO
-  List<List<int>> calculateRealValidMoves(int row. int col, ChessPiece? piece; bool checkSimulation){
+  List<List<int>> calculateRealValidMoves(
+    int row,
+    int col,
+    ChessPiece? piece,
+    bool checkSimulation,
+  ) {
     List<List<int>> realValidMoves = [];
     List<List<int>> candidateMoves = calculateRawValidMoves(row, col, piece);
 
     // alter generating all los movimientos validos, vamos a filtrar cualquiera que resulte en un jaque del Rey
-    if(checkSimulation){
-      for(var move in  candidateMoves){
+    if (checkSimulation) {
+      for (var move in candidateMoves) {
         int endRow = move[0];
         int endCol = move[1];
 
         //simula un futuro movimiento si es seguro
-        if(simulateMovesIsSafe()){
+        if (simulatedMoveIsSafe(piece!, row, col, endRow, endCol)) {
           realValidMoves.add(move);
         }
       }
-    } else{
+    } else {
       realValidMoves = candidateMoves;
     }
     return realValidMoves;
@@ -479,48 +485,56 @@ class _GameBoardstate extends State<GameBoard> {
     return false;
   }
 
-// SIMULA UN FUTURO MOVIMIENTO PARA VER SI ES SEGURO(NO PONE A NUESTRO PROPIO REY BAJO TAQUE)
-bool simulatedMoveIsSafe(ChessPiece piece, int startRow, int startCol, int endRow, int endCol){
+  // SIMULA UN FUTURO MOVIMIENTO PARA VER SI ES SEGURO(NO PONE A NUESTRO PROPIO REY BAJO TAQUE)
+  bool simulatedMoveIsSafe(
+    ChessPiece piece,
+    int startRow,
+    int startCol,
+    int endRow,
+    int endCol,
+  ) {
+    //save the current board state
 
-//save the current board state
+    ChessPiece? originalDestinationPiece = board[endRow][endCol];
 
- ChessPiece? originalDestinationPiece = board[endRow][endCol];
+    //if the ppiece is the king, save its curret position and update to the new one
+    List<int>? originalKingPosition;
+    if (piece.type == ChessPieceType.king) {
+      originalKingPosition = piece.isWhite
+          ? whiteKingPosition
+          : blackKingPosition;
 
-//if the ppiece is the king, save its curret position and update to the new one
-List<int>?originalKingPosition;
-if(piece.type == ChessPieceType.king){
-originalKingPosition = piece.isWhite ? whiteKingPosition : blackKingPosition;
+      //update the king position
+      if (piece.isWhite) {
+        whiteKingPosition = [endRow, endCol];
+      } else {
+        blackKingPosition = [endRow, endCol];
+      }
+    }
 
-//update the king position
-if(piece.isWhite){
-  whiteKingPosition =[endRow, endCol];
-} else{
-  blackKingPosition =[endRow, endCol];
- }
-}
+    //Simulate the move
+    board[endRow][endCol] = piece;
+    board[startRow][startCol] = null;
 
-//Simulate the move
-board[endRow][endCol] = piece;
-board[startRow][startCol] = null;
+    //check if our king is under attack
+    bool kingInCheck = isKingInCheck(piece.isWhite);
 
-//check if our king is under attack
-bool kingInCheck = isKingInCheck(piece.isWhite);
+    //restore board to original state
+    board[startRow][startCol] = piece;
+    board[endRow][endCol] = originalDestinationPiece;
 
-//restore board to original state
-board[startRow][startCol] = piece;
-board[endRow][endCol] = originalDestinationPiece;
-
-//if the piece was the king, restore it original position
-if(piece.type == ChessPieceType.king){
-  if(piece.isWhite){
-    whiteKingPosition = originalKingPosition!;
-  } else{
-    blackKingPosition = originalKingPosition!;
+    //if the piece was the king, restore it original position
+    if (piece.type == ChessPieceType.king) {
+      if (piece.isWhite) {
+        whiteKingPosition = originalKingPosition!;
+      } else {
+        blackKingPosition = originalKingPosition!;
+      }
+    }
+    // if king is in check = true, means its not a safe move. safe move = false
+    return kingInCheck;
   }
-}
-// if king is in check = true, means its not a safe move. safe move = false
-return kingInCheck;
-}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
